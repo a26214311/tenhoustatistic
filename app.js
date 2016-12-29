@@ -71,6 +71,7 @@ function startserver(){
   console.log(new Date());
   users = {};
   scores = {};
+  match = [];
   loaduser();
   getlog();
   setTimeout(function(){
