@@ -65,10 +65,17 @@ app.use(function(err, req, res, next) {
 app.listen('12450', function () {
   console.log('server started');
   console.log('http://localhost:8088');
+  startserver();
+});
+function startserver(){
+  users = {};
+  scores = {};
   loaduser();
   getlog();
-});
-
+  setTimeout(function(){
+    startserver();
+  },300000)
+}
 
 
 function gethtml(){
