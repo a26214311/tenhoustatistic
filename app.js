@@ -89,10 +89,18 @@ function gethtml(){
 
 function getlog(){
   console.log('fetching:');
+  var now = new Date();
+  var year = now.getFullYear();
+  var month = now.getMonth()+1;
+  var day = now.getDate();
+  var datestr = ""+year+month+day;
+  if(year==2017){
+    datestr = "20161231";  
+  }
   var options = {
     hostname: 'www30.atpages.jp',
     port: 80,
-    path: '/mojan/tenhou/l2260/log/all/sca20161228.log',
+    path: '/mojan/tenhou/l2260/log/all/sca'+datestr+'.log',
     method: 'GET',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
