@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <title>Title</title>
+  <style>
+    .inc1{color:red}
+    .inc0{color:green}
+    .nexists{color:blue}
+    .nunexists{color:green}
+    .nfailed{color:black}
+  </style>
+  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    function submit(){
+      var name = document.getElementById("username").value;
+      var id = document.getElementById("userid").value;
+      console.log(name,id);
+      if(name.length<1||id.length<1){
+        alert('请输入正确的ID');
+        return
+      }
+      var url = '/adduser?'+'id='+id+'&name='+name;
+
+      $.get(url,function(response,status){
+        if(status=='success'){
+          var name = document.getElementById("username").value='';
+          var id = document.getElementById("userid").value='';
+          gettable();
+        }
+      })
+    }
+
+    function gettable(){
+      var url = '/gettable';
+      document.getElementById("main").innerHTML='刷新中，请稍后';
+      $.get(url,function(response,status){
+        if(status=='success'){
+          document.getElementById("main").innerHTML=response;
+        }else{
+          document.getElementById("main").innerHTML='error';
+        }
+      });
+    }
+
+  </script>
+</head>
+<body>
+
+<div class="row">
+  <div class="col-xs-2">
+    <input class="form-control" id="username" placeholder="天凤ID">
+  </div>
+  <div class="col-xs-3">
+    <input class="form-control" id="userid" placeholder="QQ号">
+  </div>
+  <div class="col-xs-4">
+    <button class="btn btn-default" onclick="submit();">提交</button>
+  </div>
+</div>
+
+
+
+<div id="main">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
