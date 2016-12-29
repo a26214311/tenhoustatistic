@@ -74,7 +74,7 @@ app.listen('12450', function () {
 function gethtml(){
   var data = fs.readFileSync('index.html', 'utf-8');
   var rr = generatetable();
-  var tail = '</div></body></html>';
+  var tail = '</div></div></body></html>';
   return data + rr + tail;
 }
 
@@ -231,12 +231,12 @@ function generatetable(){
       max = scores[p].list.length;
     }
   }
-  var h = '<table border="1">';
-  h = h + '<tr><td></td><td></td>';
+  var h = '<table class="table table-bordered">';
+  h = h + '<tr><th></th><th></th>';
   for(var i=0;i<match.length;i++){
-    h = h + '<td>';
+    h = h + '<th>';
     h = h + match[i];
-    h = h + '</td>';
+    h = h + '</th>';
   }
   h = h + '</tr>';
   var retlist = [];
