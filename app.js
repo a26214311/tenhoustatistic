@@ -68,6 +68,7 @@ app.listen('12450', function () {
   startserver();
 });
 function startserver(){
+  console.log(new Date());
   users = {};
   scores = {};
   loaduser();
