@@ -213,7 +213,7 @@ function getlog(){
   req.end();
 }
 
-var iniscore = 50;
+var iniscore = 233;
 var scores = {};
 var match = [];
 function adduser(uid,name){
@@ -304,15 +304,17 @@ function getrule(){
   str = str + '比赛规则<br>';
   str = str + '比赛时间：2016.12.30 23:00:0 到 2016.12.31 22:59:59' + '<br>';
   str = str + '再此页面填写天凤ID以及QQ号之后，在指定个室进行比赛' + '<br>';
+  str = str + '<a href="http://tenhou.net/0/?L2973" target="_blank"><span style="font-size:28px"><b>个室地址</b></span></a><br>';
   str = str + '比赛自由组队，每次比赛后自动结算积分' + '<br>';
   str = str + '每人初始分数为233分' + '<br>';
   str = str + '每次比赛根据获得的pt数增加或减少得分' + '<br>';
   str = str + '三麻获得的积分为pt数的一半，四麻获得的积分为pt数' + '<br>';
   str = str + '当得分降为0或以下时，淘汰' + '<br>';
-  str = str + '一局中只有所有参赛人员均已报名且未淘汰时，才为有效比赛' + '<br>';
+  str = str + '一局中只有所有参赛人员均<span class="nexists">已报名且未淘汰</span>时，才为有效比赛' + '<br>';
+  str = str + '有任何一人<span class="nunexists">未报名</span>或<span class="nfailed"><b>已淘汰</b></span>，该局比赛不计分' + '<br>';
   str = str + '时间结束后，如果未淘汰人员超过4人，前4名进行决赛' + '<br>';
   str = str + '决赛为2016.12.31 23:00:00之后这4人的第一场比赛，这场比赛的积分为5倍pt数' + '<br>';
-  str = str + '2017.1.1 22:59:59如果还没有进行决赛的话，获奖者为前三名' + '<br>';
+  str = str + '' + '<br>';
   str = str + '' + '<br>';
   str = str + '奖品：' + '<br>';
   str = str + '第一名：DMM3000点点卡或30元红包' + '<br>';
