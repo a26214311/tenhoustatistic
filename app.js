@@ -104,9 +104,9 @@ function getlog(){
   var month = now.getMonth()+1;
   var day = now.getDate();
   var datestr = ""+year+month+day;
-  datestr = "20161228";
+  //datestr = "20161228";
   if(year==2017){
-    datestr = "20161228";
+    datestr = "20161231";
   }
   var options = {
     hostname: 'www30.atpages.jp',
@@ -227,6 +227,11 @@ function adduser(uid,name){
     users[name]=uid;
     console.log(users);
     saveuser();
+    users = {};
+    scores = {};
+    match = [];
+    loaduser();
+    getlog();
     return true;
   }else{
     return false;
