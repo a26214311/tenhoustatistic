@@ -26,7 +26,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function (req, res) {
-  res.send(gethtml());
+  //res.send(gethtml());
+  var data = fs.readFileSync('index.html', 'utf-8');
+  res.send(data);
+});
+
+app.get('/index.css', function (req, res) {
+  var data = fs.readFileSync('index.css', 'utf-8');
+  res.send(data);
 });
 
 app.get('/adduser', function (req, res) {
@@ -100,8 +107,9 @@ function getlog(){
   var month = now.getMonth()+1;
   var day = now.getDate();
   var datestr = ""+year+month+day;
+  datestr = "20161228";
   if(year==2017){
-    datestr = "20161231";  
+    datestr = "20161228";
   }
   var options = {
     hostname: 'www30.atpages.jp',
