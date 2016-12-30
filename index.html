@@ -41,14 +41,17 @@
     $.get('/getdata', function(d){
       if(d.d && d.m){
         var user = d.d, match = d.m, th = $('thead'),  tb = $('tbody');
+        var userKeys = Object.keys(user).sort(function(a,b){return user[b].j-user[a].j});
         th.append(
           '<tr>' +
-            '<th>场次</th>' +
-            '<th>' +
-            Object.keys(user).join('</th><th>') +
-            '</th>' +
+            '<th valign="middle" class="big-th">场次</th>' +
+            '<th valign="middle"><p class="user-name">' +
+              userKeys.join('</p></th><th><p class="user-name">') +
+            '</p></th>' +
           '</tr>');
-        var userKeys = Object.keys(user).sort(function(a,b){return user[b].j-user[a].j});
+        for(var i = 0; i < userKeys.length; i++){
+          $('th:eq(' + ( i + 1 ) + ')').append('<p class="user-total">(' + user[userKeys[i]].j + ')</p>')
+        }
         for(var i = 0; i < match.length; i++){
           var tdlist = '';
           for(var j = 0; j < userKeys.length; j++){

@@ -11,6 +11,7 @@ var users = require('./routes/users');
 
 var app = express();
 
+var opn = require('opn');
 
 
 // view engine setup
@@ -73,6 +74,7 @@ app.listen('12450', function () {
   console.log('server started');
   console.log('http://localhost:8088');
   startserver();
+  opn('http://localhost:12450/', {app: ['chrome']})
 });
 function startserver(){
   console.log(new Date());

@@ -9,14 +9,18 @@
 	margin-top: 20px;
 }
 
-table > thead  th{
-	line-height: 100px;
-}
-
 .match{
 	font-size: 25px;
 	text-align: center;
 	vertical-align: middle !important;
+}
+th{
+	vertical-align: middle !important;
+	text-align: center;
+}
+
+th.big{
+	font-size: 30px;
 }
 
 /* theme */
