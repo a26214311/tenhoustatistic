@@ -43,6 +43,11 @@ app.get('/gettable', function (req, res) {
   res.send(rr);
 });
 
+app.get('/getdata', function (req, res) {
+  var ret = {d:scores,m:match};
+  res.send(ret);
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
