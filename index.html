@@ -9,6 +9,13 @@
   <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
   <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script type="text/javascript">
+    init();
+    function init(){
+      if(localStorage.getItem("rule")==undefined){
+        $('.rule').modal('show');
+        localStorage.setItem("rule")=1;
+      }
+    }
     function submit() {
       var name = document.getElementById("username").value;
       var id = document.getElementById("userid").value;
