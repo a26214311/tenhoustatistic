@@ -12,7 +12,7 @@
     init();
     function init(){
       if(localStorage.getItem("rule")==undefined){
-        $('.rule').modal('show');
+        $('#rulebutton').click();
         localStorage.setItem("rule")=1;
       }
     }
@@ -100,7 +100,7 @@
       <button class="btn btn-default" onclick="submit();">提交</button>
     </div>
     <div class="col-xs-2" style="text-align: right;">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#rule" style="margin-right: 10px;">规则</button>
+      <button id="rulebutton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#rule" style="margin-right: 10px;">规则</button>
     </div>
     <div class="col-xs-3" style="text-align: right;">
       <button class="btn btn-default hidden-btn btn-block">隐藏未参加比赛的场次</button>
