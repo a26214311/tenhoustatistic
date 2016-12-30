@@ -5,8 +5,7 @@
 	padding: 6px 12px;
 }
 #main {
-	height: 400px;
-	margin-top: 20px;
+	margin-top: 10px;
 }
 
 .match{
@@ -23,6 +22,7 @@ td, th{
 
 th.big-th{
 	font-size: 30px;
+	font-weight: normal;
 }
 
 th p.user-name,
