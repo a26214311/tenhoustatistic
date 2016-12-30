@@ -6,27 +6,6 @@
   <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <link href="index.css" rel="stylesheet">
   <title>Title</title>
-  <style>
-    .inc1 {
-      color: red
-    }
-
-    .inc0 {
-      color: green
-    }
-
-    .nexists {
-      color: blue
-    }
-
-    .nunexists {
-      color: green
-    }
-
-    .nfailed {
-      color: black
-    }
-  </style>
   <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
   <script type="text/javascript">
     function submit() {
@@ -59,12 +38,37 @@
         }
       });
     }
-    $.get('/getdata')
+    $.get('/getdata', function(d){
+      if(d.d && d.m){
+        var user = d.d, match = d.m, th = $('thead'),  tb = $('tbody');
+        th.append(
+          '<tr>' +
+            '<th>场次</th>' +
+            '<th>' +
+            Object.keys(user).join('</th><th>') +
+            '</th>' +
+          '</tr>');
+        var userKeys = Object.keys(user).sort(function(a,b){return user[b].j-user[a].j});
+        for(var i = 0; i < match.length; i++){
+          var tdlist = '';
+          for(var j = 0; j < userKeys.length; j++){
+            tdlist += '<td class="match" valign="middle">';
+            tdlist += user[userKeys[j]].list[i];
+            tdlist += '</td>'
+          }
+          tb.append(
+            '<tr>' +
+              '<td>' + match[i] + '</td>' +
+              tdlist +
+            '</tr>')
+        }
+      }
+    });
   </script>
 </head>
 <body>
 <div class="container">
-  <div class="row">
+  <div class="row actions">
     <div class="col-xs-2">
       <input class="form-control" id="username" placeholder="天凤ID">
     </div>
@@ -76,6 +80,10 @@
     </div>
   </div>
   <div id="main">
+    <table class="table table-bordered table-striped table-hover">
+      <thead></thead>
+      <tbody></tbody>
+    </table>
   </div>
 </div>
 </body>

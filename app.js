@@ -31,11 +31,6 @@ app.get('/', function (req, res) {
   res.send(data);
 });
 
-app.get('/index.css', function (req, res) {
-  var data = fs.readFileSync('index.css', 'utf-8');
-  res.send(data);
-});
-
 app.get('/adduser', function (req, res) {
   var querydata = req.query;
   var id = querydata.id;
