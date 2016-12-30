@@ -40,7 +40,7 @@
     }
     $.get('/getdata', function(d){
       if(d.d && d.m){
-        var user = d.d, match = d.m, th = $('thead'),  tb = $('tbody');
+        var user = d.d, match = d.m, th = $('thead'),  tb = $('tbody'), startMark = 233;
         var userKeys = Object.keys(user).sort(function(a,b){return user[b].j-user[a].j});
         th.append(
           '<tr>' +
@@ -50,18 +50,28 @@
             '</p></th>' +
           '</tr>');
         for(var i = 0; i < userKeys.length; i++){
-          $('th:eq(' + ( i + 1 ) + ')').append('<p class="user-total">(' + user[userKeys[i]].j + ')</p>')
+          $('th:eq(' + ( i + 1 ) + ')').append('<p class="user-total ' + (user[userKeys[i]].j > 0 ? 'red-mark' : 'green-mark') + '">(' + (user[userKeys[i]].j > 0 ? '+' + user[userKeys[i]].j.toFixed(1) : user[userKeys[i]].j.toFixed(1)) + ')</p>')
         }
         for(var i = 0; i < match.length; i++){
-          var tdlist = '';
+          var tdlist = '', count = 0;
           for(var j = 0; j < userKeys.length; j++){
+            if(user[userKeys[j]].list[i] == 0)
+              count ++;
             tdlist += '<td class="match" valign="middle">';
-            tdlist += user[userKeys[j]].list[i];
+            tdlist = tdlist + '<p class="mark-score ' + (user[userKeys[j]].list[i] > 0 ? 'red-mark' : user[userKeys[j]].list[i] == 0 ? '' : 'green-mark') + '">' + (user[userKeys[j]].list[i] > 0 ? '+' + user[userKeys[j]].list[i].toFixed(1) : user[userKeys[j]].list[i] == 0 ? 0 : user[userKeys[j]].list[i].toFixed(1)) + '</p>';
+            var markArr = user[userKeys[j]].list.slice(0, i + 1), sum = startMark;
+            for(var k = 0; k < markArr.length; k ++){
+              sum += parseFloat(markArr[k]);
+            }
+            tdlist = tdlist + '<p class="mark-total">(' + sum.toFixed(1) + ')</p>';
             tdlist += '</td>'
           }
+          if(count == userKeys.length){
+          }
+          console.log(tdlist)
           tb.append(
             '<tr>' +
-              '<td>' + match[i] + '</td>' +
+              '<td valign="middle" class="results">' + match[i] + '</td>' +
               tdlist +
             '</tr>')
         }
