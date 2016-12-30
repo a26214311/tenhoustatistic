@@ -318,8 +318,8 @@ function getrule(){
   str = str + '' + '<br>';
   str = str + '奖品：' + '<br>';
   str = str + '第一名：DMM3000点点卡或30元红包' + '<br>';
-  str = str + '第一名：DMM2000点点卡或20元红包' + '<br>';
-  str = str + '第一名：DMM1000点点卡或10元红包' + '<br>';
+  str = str + '第二名：DMM2000点点卡或20元红包' + '<br>';
+  str = str + '第三名：DMM1000点点卡或10元红包' + '<br>';
   return str;
 }
 
