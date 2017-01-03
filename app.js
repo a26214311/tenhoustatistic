@@ -73,15 +73,16 @@ app.use(function(err, req, res, next) {
 app.listen('12450', function () {
   console.log('server started');
   console.log('http://localhost:8088');
+	loaduser();
   startserver();
   opn('http://localhost:12450/', {app: ['chrome']})
 });
 function startserver(){
   console.log(new Date());
-  users = {};
-  scores = {};
-  match = [];
-  loaduser();
+  //users = {};
+  //scores = {};
+  //match = [];
+  //loaduser();
   getlog();
   setTimeout(function(){
     startserver();
@@ -103,10 +104,23 @@ function getlog(){
   var year = now.getFullYear();
   var month = now.getMonth()+1;
   var day = now.getDate();
-  var datestr = ""+year+month+day;
+	var monthstr;
+  if(month<10){
+	monthstr = "0"+month;
+	}else{
+	monthstr = "" + month
+	}
+  var daystr;
+  if(day<10){
+	daystr = "0"+day;
+  }else{
+	daystr = "" + day;
+  }
+  var datestr = ""+year+monthstr+daystr;
+	console.log(datestr);
   //datestr = "20161228";
   if(year==2017){
-    datestr = "20161231";
+  //  datestr = "20161231";
   }
   var options = {
     hostname: 'www30.atpages.jp',
@@ -125,6 +139,10 @@ function getlog(){
     });
 
     res.on('end', function () {
+	users = {};
+	score = {};
+	match = [];
+	loaduser();
       console.log('end');
       var chunka = body.split('\n');
       for(var i=0;i<chunka.length;i++){
