@@ -72,7 +72,7 @@ app.use(function(err, req, res, next) {
 
 app.listen('12450', function () {
   console.log('server started');
-  console.log('http://localhost:8088');
+  console.log('http://localhost:12450');
 	loaduser();
   startserver();
   opn('http://localhost:12450/', {app: ['chrome']})
@@ -106,22 +106,20 @@ function getlog(){
   var day = now.getDate();
 	var monthstr;
   if(month<10){
-	monthstr = "0"+month;
+	  monthstr = "0"+month;
 	}else{
-	monthstr = "" + month
+	  monthstr = "" + month
 	}
   var daystr;
   if(day<10){
-	daystr = "0"+day;
+	  daystr = "0"+day;
   }else{
-	daystr = "" + day;
+	  daystr = "" + day;
   }
   var datestr = ""+year+monthstr+daystr;
 	console.log(datestr);
-  //datestr = "20161228";
-  if(year==2017){
-  //  datestr = "20161231";
-  }
+	//for test only
+  datestr = "20161231";
   var options = {
     hostname: 'www30.atpages.jp',
     port: 80,
@@ -139,16 +137,16 @@ function getlog(){
     });
 
     res.on('end', function () {
-	users = {};
-	score = {};
-	match = [];
-	loaduser();
+      users = {};
+      score = {};
+      match = [];
+      loaduser();
       console.log('end');
       var chunka = body.split('\n');
+      var matchno = 0;
       for(var i=0;i<chunka.length;i++){
         var linestr = chunka[i];
         var stra = linestr.split("|");
-
         var roomid = stra[0];
         if(stra.length==4&&roomid.indexOf("L2973")>-1){
           var time = stra[1];
@@ -191,12 +189,14 @@ function getlog(){
             var score = parseFloat(uas.substring(n+1));
             n2s[name]=score;
           }
-          match.push(matchstr);
           var is3m = false;
           if(mra.length==3){
             is3m = true;
           }
           if(effect){
+            matchno ++;
+            var times = (1+matchno/10).toFixed(1);
+            matchstr = matchstr + '<br>' + '<b>积分*' + times + '</b>';
             for(var p in scores){
               if(n2s[p]==undefined){
                 scores[p].list.push(0);
@@ -205,6 +205,7 @@ function getlog(){
                 if(is3m){
                   incscore = incscore/2;
                 }
+                incscore = incscore * times;
                 var newj = scores[p].j+incscore;
                 if(newj<0){
                   scores[p].st=0;
@@ -218,6 +219,7 @@ function getlog(){
               scores[p].list.push(0);
             }
           }
+          match.push(matchstr);
         }
       }
     });
