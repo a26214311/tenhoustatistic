@@ -168,11 +168,11 @@ function getlog(){
             var name = uas.substring(0,n).trim();
             var matchnamestr;
             if(scores[name]==undefined){
-              matchnamestr = '<span class="nunexists">'+name+'</span>';
+              matchnamestr = '<b><span class="nunexists">'+name+'</span></b>';
             }else if(scores[name].st==0){
-              matchnamestr = '<span class="nfailed">'+name+'</span>';
+              matchnamestr = '<b><span class="nfailed">'+name+'</span></b>';
             }else{
-              matchnamestr = '<span class="nexists">'+name+'</span>';
+              matchnamestr = '<b><span class="nexists">'+name+'</span></b>';
             }
             if(matchstr == ''){
               matchstr = matchnamestr + uas.substring(n);
