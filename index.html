@@ -8,84 +8,6 @@
   <title>新年麻雀大会</title>
   <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
   <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script type="text/javascript">
-    init();
-    function init(){
-      if(localStorage.getItem("rule")==undefined){
-        $('#rulebutton').click();
-        localStorage.setItem("rule",1);
-      }
-    }
-    function submit() {
-      var name = document.getElementById("username").value;
-      var id = document.getElementById("userid").value;
-      console.log(name, id);
-      if (name.length < 1 || id.length < 1) {
-        alert('请输入正确的ID');
-        return
-      }
-      var url = '/adduser?' + 'id=' + id + '&name=' + name;
-
-      $.get(url, function (response, status) {
-        if (status == 'success') {
-          var name = document.getElementById("username").value = '';
-          var id = document.getElementById("userid").value = '';
-          window.location.reload();
-        }
-      })
-    }
-
-    function gettable() {
-      var url = '/gettable';
-      document.getElementById("main").innerHTML = '刷新中，请稍后';
-      $.get(url, function (response, status) {
-        if (status == 'success') {
-          document.getElementById("main").innerHTML = response;
-        } else {
-          document.getElementById("main").innerHTML = 'error';
-        }
-      });
-    }
-    $.get('/getdata', function(d){
-      if(d.d && d.m){
-        var user = d.d, match = d.m, th = $('thead'),  tb = $('tbody'), startMark = 233;
-        var userKeys = Object.keys(user).sort(function(a,b){return user[b].j-user[a].j});
-        th.append(
-          '<tr>' +
-            '<th valign="middle" class="big-th">场次</th>' +
-            '<th valign="middle"><p class="user-name">' +
-              userKeys.join('</p></th><th><p class="user-name">') +
-            '</p></th>' +
-          '</tr>');
-        for(var i = 0; i < userKeys.length; i++){
-          $('th:eq(' + ( i + 1 ) + ')').append('<p class="user-total ' + (user[userKeys[i]].j > 0 ? 'red-mark' : 'green-mark') + '">(' + (user[userKeys[i]].j > 0 ? '+' + user[userKeys[i]].j.toFixed(1) : user[userKeys[i]].j.toFixed(1)) + ')</p>')
-        }
-        for(var i = 0; i < match.length; i++){
-          var tdlist = '', count = 0, flag = 1;
-          for(var j = 0; j < userKeys.length; j++){
-            if(user[userKeys[j]].list[i] == 0)
-              count ++;
-            tdlist += '<td class="match" valign="middle">';
-            tdlist = tdlist + '<p class="mark-score ' + (user[userKeys[j]].list[i] > 0 ? 'red-mark' : user[userKeys[j]].list[i] == 0 ? '' : 'green-mark') + '">' + (user[userKeys[j]].list[i] > 0 ? '+' + user[userKeys[j]].list[i].toFixed(1) : user[userKeys[j]].list[i] == 0 ? 0 : user[userKeys[j]].list[i].toFixed(1)) + '</p>';
-            var markArr = user[userKeys[j]].list.slice(0, i + 1), sum = startMark;
-            for(var k = 0; k < markArr.length; k ++){
-              sum += parseFloat(markArr[k]);
-            }
-            tdlist = tdlist + '<p class="mark-total">(' + sum.toFixed(1) + ')</p>';
-            tdlist += '</td>'
-          }
-          if(count == userKeys.length){
-            flag = 0;
-          }
-          tb.append(
-            (flag ? '<tr>' : '<tr class="hidden-line">') +
-              '<td valign="middle" class="results">' + match[i] + '</td>' +
-              tdlist +
-            '</tr>')
-        }
-      }
-    });
-  </script>
 </head>
 <body>
 <div class="container">
@@ -146,6 +68,81 @@
   </div>
 </div>
 <script>
+  (function(){
+    if(!localStorage.getItem("rule")){
+      $('#rulebutton')[0].click();
+      localStorage.setItem("rule",1);
+    }
+  })();
+  function submit() {
+    var name = document.getElementById("username").value;
+    var id = document.getElementById("userid").value;
+    console.log(name, id);
+    if (name.length < 1 || id.length < 1) {
+      alert('请输入正确的ID');
+      return
+    }
+    var url = '/adduser?' + 'id=' + id + '&name=' + name;
+
+    $.get(url, function (response, status) {
+      if (status == 'success') {
+        var name = document.getElementById("username").value = '';
+        var id = document.getElementById("userid").value = '';
+        window.location.reload();
+      }
+    })
+  }
+
+  function gettable() {
+    var url = '/gettable';
+    document.getElementById("main").innerHTML = '刷新中，请稍后';
+    $.get(url, function (response, status) {
+      if (status == 'success') {
+        document.getElementById("main").innerHTML = response;
+      } else {
+        document.getElementById("main").innerHTML = 'error';
+      }
+    });
+  }
+  $.get('/getdata', function(d){
+    if(d.d && d.m){
+      var user = d.d, match = d.m, th = $('thead'),  tb = $('tbody'), startMark = 233;
+      var userKeys = Object.keys(user).sort(function(a,b){return user[b].j-user[a].j});
+      th.append(
+        '<tr>' +
+        '<th valign="middle" class="big-th">场次</th>' +
+        '<th valign="middle"><p class="user-name">' +
+        userKeys.join('</p></th><th><p class="user-name">') +
+        '</p></th>' +
+        '</tr>');
+      for(var i = 0; i < userKeys.length; i++){
+        $('th:eq(' + ( i + 1 ) + ')').append('<p class="user-total ' + (user[userKeys[i]].j > 0 ? 'red-mark' : 'green-mark') + '">(' + (user[userKeys[i]].j > 0 ? '+' + user[userKeys[i]].j.toFixed(1) : user[userKeys[i]].j.toFixed(1)) + ')</p>')
+      }
+      for(var i = 0; i < match.length; i++){
+        var tdlist = '', count = 0, flag = 1;
+        for(var j = 0; j < userKeys.length; j++){
+          if(user[userKeys[j]].list[i] == 0)
+            count ++;
+          tdlist += '<td class="match" valign="middle">';
+          tdlist = tdlist + '<p class="mark-score ' + (user[userKeys[j]].list[i] > 0 ? 'red-mark' : user[userKeys[j]].list[i] == 0 ? '' : 'green-mark') + '">' + (user[userKeys[j]].list[i] > 0 ? '+' + user[userKeys[j]].list[i].toFixed(1) : user[userKeys[j]].list[i] == 0 ? 0 : user[userKeys[j]].list[i].toFixed(1)) + '</p>';
+          var markArr = user[userKeys[j]].list.slice(0, i + 1), sum = startMark;
+          for(var k = 0; k < markArr.length; k ++){
+            sum += parseFloat(markArr[k]);
+          }
+          tdlist = tdlist + '<p class="mark-total">(' + sum.toFixed(1) + ')</p>';
+          tdlist += '</td>'
+        }
+        if(count == userKeys.length){
+          flag = 0;
+        }
+        tb.append(
+          (flag ? '<tr>' : '<tr class="hidden-line">') +
+          '<td valign="middle" class="results">' + match[i] + '</td>' +
+          tdlist +
+          '</tr>')
+      }
+    }
+  });
   $('.hidden-btn').on('click', function(){
     if(!$(this).hasClass('on')){
       $(this).addClass('on').text('显示未参加比赛的场次');
@@ -154,7 +151,7 @@
       $(this).removeClass('on').text('隐藏未参加比赛的场次');
       $('.hidden-line').show();
     }
-  })
+  });
 </script>
 </body>
 </html>
