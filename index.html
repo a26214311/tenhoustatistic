@@ -125,10 +125,19 @@
             count ++;
           tdlist += '<td class="match" valign="middle">';
           tdlist = tdlist + '<p class="mark-score ' + (user[userKeys[j]].list[i] > 0 ? 'red-mark' : user[userKeys[j]].list[i] == 0 ? '' : 'green-mark') + '">' + (user[userKeys[j]].list[i] > 0 ? '+' + user[userKeys[j]].list[i].toFixed(1) : user[userKeys[j]].list[i] == 0 ? 0 : user[userKeys[j]].list[i].toFixed(1)) + '</p>';
+
+          /* 使用reduce */
+          var sum = user[userKeys[j]].list.slice(0, i + 1).reduce(function(a, b){
+            return parseFloat(a) + parseFloat(b)
+          }, startMark);
+
+          /*
           var markArr = user[userKeys[j]].list.slice(0, i + 1), sum = startMark;
           for(var k = 0; k < markArr.length; k ++){
             sum += parseFloat(markArr[k]);
           }
+          */
+
           tdlist = tdlist + '<p class="mark-total">(' + sum.toFixed(1) + ')</p>';
           tdlist += '</td>'
         }
